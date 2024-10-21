@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Patient
+public class Patient : PatientController
 {
     public string patientName;
     public string condition;

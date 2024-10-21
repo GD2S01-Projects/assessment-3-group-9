@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatientController : MonoBehaviour
+public class PatientController : scrBaseCharacter
 {
     private string sName = "Gary";
     private float fOverallHealth;
