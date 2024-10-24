@@ -4,32 +4,27 @@ using UnityEngine;
 
 public class PatientController : MonoBehaviour
 {
-    private string sName = "Gary";
-    private float fOverallHealth;
+    public Camera mainCamera;
+    public float fEnterInterval;
+    private float fCurrentTimer = 0.0f;
+    private int iTotalCreatedToday = 0;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        fOverallHealth = Random.Range(0.0f, 100.0f);
-        DisplayInformation();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        fCurrentTimer += Time.deltaTime;
+        if (fCurrentTimer >= fEnterInterval)
+        {
+            CreatePatients();
+            fCurrentTimer = 0.0f;
+        }
     }
 
-    void Create(string _Name, float _OverallHealth)
+    void CreatePatients()
     {
-        sName = _Name;
-        fOverallHealth = _OverallHealth;
-    }
-
-    void DisplayInformation()
-    {
-        Debug.Log(sName);
-        Debug.Log(fOverallHealth);
+        Vector3 emptyVector3 = new Vector3(0, 0, 0);
+        PatientName randomType = (PatientName)Random.Range(0, System.Enum.GetValues(typeof(PatientName)).Length);
+        Debug.Log(randomType);
+        PatientFactory.instance.CreatePatient(randomType, emptyVector3);
+        iTotalCreatedToday++;
     }
 }
