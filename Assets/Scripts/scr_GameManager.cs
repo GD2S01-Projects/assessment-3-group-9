@@ -23,10 +23,6 @@ public class GameManager : MonoBehaviour
         // The nurse tests the patient with a stethoscope
         nurse.TestPatient("stethoscope");
 
-        // The nurse makes a diagnosis
-        nurse.ConfirmDiagnosis("Bruised"); // Incorrect diagnosis
-        nurse.ConfirmDiagnosis("Bleeding"); // Correct diagnosis
-
         // Display nurse's score after interaction
         nurse.DisplayScore();
     }
