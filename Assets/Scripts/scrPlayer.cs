@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scrPlayer : scrBaseCharacter
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public interface IPatient
+{ 
+    public string sName {  get; set; }
+    public float fTotalHealth { get; set; }
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        UpdatePlayerScore();
-    }
+public class Patient : MonoBehaviour, IPatient 
+{
+    public string sName { get; set; }
+    public float fTotalHealth { get; set; } = 10.5f;
 }
