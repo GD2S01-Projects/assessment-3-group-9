@@ -11,7 +11,7 @@ public class HospitalController : MonoBehaviour
     public RoomController Room4;
     public RoomController Room5;
 
-    public PatientController PatientMaster;
+    public scrPatientController PatientMaster;
 
     public int iPatientCapacity = 50;
 
@@ -19,7 +19,7 @@ public class HospitalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PatientMaster = GetComponent<PatientController>();
+        PatientMaster = GetComponent<scrPatientController>();
     }
 
     // Update is called once per frame

@@ -13,7 +13,7 @@ public class Doctor
     }
 
     // Method to receive a patient and provide feedback based on specialization
-    public void ReceivePatient(Patient patient)
+    public void ReceivePatient(scrPatient patient)
     {
         if (patient.condition == "Bleeding" && specialization == "Surgery")
         {

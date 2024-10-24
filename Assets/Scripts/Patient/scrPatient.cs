@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class Patient : PatientController
+public class scrPatient : MonoBehaviour
 {
     public string patientName;
     public string condition;
     public bool needsSpecialist;
 
     // Constructor to create a patient with a condition
-    public Patient(string name, string condition, bool needsSpecialist)
+    public scrPatient(string name, string condition, bool needsSpecialist)
     {
         this.patientName = name;
         this.condition = condition;
