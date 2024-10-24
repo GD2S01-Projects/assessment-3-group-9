@@ -10,9 +10,9 @@ public enum PatientName
     Bonnie
 }
 
-public class PatientFactory : MonoBehaviour
+public class scrPatientFactory : MonoBehaviour
 {
-    public static PatientFactory instance { get; private set; }
+    public static scrPatientFactory instance { get; private set; }
     public GameObject patientPrefab;
 
     void Awake()
@@ -42,22 +42,22 @@ public class PatientFactory : MonoBehaviour
         {
             case PatientName.Freddy:
                 {
-                    _patient.AddComponent<Patient>();
+                    //_patient.AddComponent<scrPatient>();
                     break;
                 }
             case PatientName.Foxy:
                 {
-                    _patient.AddComponent<Patient>();
+                    //_patient.AddComponent<scrPatient>();
                     break;
                 }
             case PatientName.Chica:
                 {
-                    _patient.AddComponent<Patient>();
+                    //_patient.AddComponent<scrPatient>();
                     break;
                 }
             case PatientName.Bonnie:
                 {
-                    _patient.AddComponent<Patient>();
+                    //_patient.AddComponent<scrPatient>();
                     break;
                 }
         }

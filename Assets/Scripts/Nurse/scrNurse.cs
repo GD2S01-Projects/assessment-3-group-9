@@ -15,7 +15,7 @@ public class Nurse : MonoBehaviour
     public Button stethoscopeButton;  // Button for stethoscope test
     public Button confirmDiagnosisButton; // Button to confirm diagnosis
 
-    private Patient currentPatient;
+    private scrPatient currentPatient;
     private Doctor specialistDoctor;
 
     // Diagnostic tools with cooldowns
@@ -46,7 +46,7 @@ public class Nurse : MonoBehaviour
     }
 
     // Call a new patient for diagnosis
-    public void CallPatient(Patient newPatient)
+    public void CallPatient(scrPatient newPatient)
     {
         currentPatient = newPatient;
         patientInfoText.text = "Patient: " + currentPatient.patientName + "\nSymptoms: " + currentPatient.DescribeSymptoms();
@@ -130,7 +130,7 @@ public class Nurse : MonoBehaviour
 
 
     // Refer the patient to a specialist doctor
-    public void ReferToDoctor(Patient patient)
+    public void ReferToDoctor(scrPatient patient)
     {
         if (specialistDoctor != null)
         {
