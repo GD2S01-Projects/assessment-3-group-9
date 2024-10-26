@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/scnMainMenu.unity
     guid: 36efbaafb703c644c904a260cdbb6904
   - enabled: 1
-    path: Assets/Scenes/scnMainGame.unity
+    path: Assets/Scenes/scnPatientSelection.unity
+    guid: bb250ad527dc26c42a6f4b51c448c786
+  - enabled: 1
+    path: Assets/Scenes/scnDiagnosis.unity
     guid: e49effa8d0ca13c43bc352bfbeb331ab
   m_configObjects: {}

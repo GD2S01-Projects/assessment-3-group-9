@@ -451,7 +451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00098038, y: 0.000005722}
+  m_AnchoredPosition: {x: -0.0009765625, y: 0}
   m_SizeDelta: {x: 0.0019531, y: -1017.7047}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &222082798
@@ -948,7 +948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67add91bd8697e4468862b1f0a24b2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  msLoadGame: scnMainGame
+  msLoadGame: scnPatientSelection
 --- !u!4 &1831184420
 Transform:
   m_ObjectHideFlags: 0
