@@ -16,7 +16,7 @@ public class Nurse : MonoBehaviour
     public Button confirmDiagnosisButton; // Button to confirm diagnosis
 
     private scrPatient currentPatient;
-    private Doctor specialistDoctor;
+    private scrDoctor specialistDoctor;
 
     // Diagnostic tools with cooldowns
     private bool thermometerReady = true;
@@ -40,7 +40,7 @@ public class Nurse : MonoBehaviour
     }
 
     // Assign a specialist doctor for referrals
-    public void AssignDoctor(Doctor doctor)
+    public void AssignDoctor(scrDoctor doctor)
     {
         specialistDoctor = doctor;
     }
@@ -49,7 +49,13 @@ public class Nurse : MonoBehaviour
     public void CallPatient(scrPatient newPatient)
     {
         currentPatient = newPatient;
-        patientInfoText.text = "Patient: " + currentPatient.patientName + "\nSymptoms: " + currentPatient.DescribeSymptoms();
+        patientInfoText.text = "Patient: " + currentPatient.patientName + 
+            "\nHead Symptoms: " + currentPatient.DescribeSymptoms(0) +
+            "\nBody Symptoms: " + currentPatient.DescribeSymptoms(1) +
+            "\nLeft Arm Symptoms: " + currentPatient.DescribeSymptoms(2) +
+            "\nRight Arm Symptoms: " + currentPatient.DescribeSymptoms(3) +
+            "\nLeft Leg Symptoms: " + currentPatient.DescribeSymptoms(4) +
+            "\nRight Leg Symptoms: " + currentPatient.DescribeSymptoms(5);
     }
 
     // Test a patient with a tool
@@ -113,7 +119,7 @@ public class Nurse : MonoBehaviour
         string nurseDiagnosis = diagnosisInputField.text;
         Debug.Log("Diagnosis entered: " + nurseDiagnosis);  // Log the entered diagnosis
 
-        bool isCorrect = Diagnosis.ConfirmDiagnosis(currentPatient.condition, nurseDiagnosis);
+        bool isCorrect = Diagnosis.ConfirmDiagnosis(currentPatient.patientBodyCondition, nurseDiagnosis);
         if (isCorrect)
         {
             score += 10 * efficiencyLevel;

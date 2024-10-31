@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     {
         // Create a nurse and a doctor
         Nurse nurse = new Nurse("Sarah");
-        Doctor surgeon = new Doctor("Dr. Smith", "Surgery");
+        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
 
         // Assign doctor to nurse
         nurse.AssignDoctor(surgeon);
