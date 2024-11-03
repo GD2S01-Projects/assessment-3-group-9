@@ -25,13 +25,13 @@ public class scrScore : MonoBehaviour
     private void Update()
     {
         print("Player Score : " + iTotalScore);
-        print("AI Nurse1 Score : " + iNurseScore1);
+        /*print("AI Nurse1 Score : " + iNurseScore1);
         print("AI Nurse2 Score : " + iNurseScore2);
         print("AI Nurse3 Score : " + iNurseScore3);
         print("AI Nurse4 Score : " + iNurseScore4);
         print("AI Nurse5 Score : " + iNurseScore5);
         print("AI Nurse6 Score : " + iNurseScore6);
-        print("AI Nurse7 Score : " + iNurseScore7);
+        print("AI Nurse7 Score : " + iNurseScore7);*/
     }
 
     public void UpdatePlayerScore()
@@ -43,13 +43,13 @@ public class scrScore : MonoBehaviour
 
     public void UppdateAllAIScore()
     {
-        iNurseScore1++;
+        /*iNurseScore1++;
         iNurseScore2++;
         iNurseScore3++;
         iNurseScore4++;
         iNurseScore5++;
         iNurseScore6++;
-        iNurseScore7++;
+        iNurseScore7++;*/
         Update();
     }
 }
