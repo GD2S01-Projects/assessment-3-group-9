@@ -12,13 +12,13 @@ public class scrScore : MonoBehaviour
     // Score variables for game
     // I would like to replace this list for some kind of dynamic memorey structure
     //VVVVVVVVVVVVVVVVVVV
-    int iNurseScore1 = 0;
-    int iNurseScore2 = 0;
-    int iNurseScore3 = 0;
-    int iNurseScore4 = 0;
-    int iNurseScore5 = 0;
-    int iNurseScore6 = 0;
-    int iNurseScore7 = 0;
+    //int iNurseScore1 = 0;
+    //int iNurseScore2 = 0;
+    //int iNurseScore3 = 0;
+    //int iNurseScore4 = 0;
+    //int iNurseScore5 = 0;
+    //int iNurseScore6 = 0;
+    //int iNurseScore7 = 0;
     //^^^^^^^^^^^^^^^^^^
 
     // Update is called once per frame

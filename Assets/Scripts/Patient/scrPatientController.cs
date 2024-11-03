@@ -22,9 +22,7 @@ public class scrPatientController : MonoBehaviour
     void CreatePatients()
     {
         Vector3 emptyVector3 = new Vector3(0, 0, 0);
-        PatientName randomType = (PatientName)Random.Range(0, System.Enum.GetValues(typeof(PatientName)).Length);
-        Debug.Log(randomType);
-        scrPatientFactory.instance.CreatePatient(randomType, emptyVector3);
+        scrPatientFactory.instance.CreatePatient(emptyVector3);
         iTotalCreatedToday++;
     }
 }
