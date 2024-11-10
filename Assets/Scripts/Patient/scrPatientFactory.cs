@@ -13,100 +13,69 @@ enum PatientIncidents
     WorkAccident
 }
 
-public class scrPatientFactory : MonoBehaviour
+public abstract class cPatientFactory
 {
-    public static scrPatientFactory instance { get; private set; }
-    public GameObject patientPrefab;
+    public abstract IPatient CreatePatient();
 
-    void Awake()
+    public void SetPatientVariables(IPatient _patient)
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
-
-    public GameObject CreatePatient(Vector3 _position)
-    {
-        GameObject patient = Instantiate(patientPrefab, _position, Quaternion.identity);
-
-        int newState = Random.Range(0, 1);
-        if (newState == 0)
-        {
-            patient.AddComponent<cAdultPatient>();
-        }
-        else
-        {
-            patient.AddComponent<cChildPatient>();
-        }
-        SetPatientVariables(patient);
-        Debug.Log("A new Patient has entered the Hospital");
-        return patient;
-    }
-
-    private void SetPatientVariables(GameObject _patient)
-    {
-        _patient.GetComponent<IPatient>().sName = RandomisePatientName();
+        _patient.sName = RandomisePatientName();
         PatientIncidents randomIncident = (PatientIncidents)Random.Range(0, System.Enum.GetValues(typeof(PatientIncidents)).Length);
         switch(randomIncident)
         {
             case PatientIncidents.CarCrash:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.CarCrash);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.CarCrash);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "CarCrash";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.CarCrash);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.CarCrash);
+                    _patient.sAccidentInfo = "CarCrash";
                     break;
                 }
             case PatientIncidents.MountainAccident:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.MountainAccident);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.MountainAccident);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "MountainAccident";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.MountainAccident);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.MountainAccident);
+                    _patient.sAccidentInfo = "MountainAccident";
                     break;
                 }
             case PatientIncidents.Attacked:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.Attacked);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.Attacked);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "Attacked";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.Attacked);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.Attacked);
+                    _patient.sAccidentInfo = "Attacked";
                     break;
                 }
             case PatientIncidents.Fight:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.Fight);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.Fight);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "Fight";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.Fight);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.Fight);
+                    _patient.sAccidentInfo = "Fight";
                     break;
                 }
             case PatientIncidents.Exposed:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.Exposed);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.Exposed);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "Exposed";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.Exposed);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.Exposed);
+                    _patient.sAccidentInfo = "Exposed";
                     break;
                 }
             case PatientIncidents.FellOver:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.FellOver);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.FellOver);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "FellOver";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.FellOver);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.FellOver);
+                    _patient.sAccidentInfo = "FellOver";
                     break;
                 }
             case PatientIncidents.WorkAccident:
                 {
-                    _patient.GetComponent<IPatient>().sCondition = RandomiseIncidentCondition(PatientIncidents.WorkAccident);
-                    _patient.GetComponent<IPatient>().iHealth = RandomiseIncidentState(PatientIncidents.WorkAccident);
-                    _patient.GetComponent<IPatient>().sAccidentInfo = "WorkAccident";
+                    _patient.sCondition = RandomiseIncidentCondition(PatientIncidents.WorkAccident);
+                    _patient.iHealth = RandomiseIncidentState(PatientIncidents.WorkAccident);
+                    _patient.sAccidentInfo = "WorkAccident";
                     break;
                 }
         }
     }
 
-    private string RandomisePatientName()
+    public string RandomisePatientName()
     {
         int selectedName = Random.Range(0, 20);
 

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-    public static GameManager Instance
+    public HospitalController hospitalController;
+    float fGameTimer = 0.0f;
+    float fPatientSpawnInterval = 10.0f;
+    int iSpawnIntervalCounter = 0;
+
+    int iMoney = 0;
+    int iUpkeep = 500;
+    int iUpkeepInterval = 250;
+    int iCuredPatientReward = 100; 
+
+    
+    void Start()
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<GameManager>();
-                if (instance == null)
-                {
-                    GameObject go = new GameObject("GameManager");
-                    instance = go.AddComponent<GameManager>();
-                }
-            }
-            return instance;
-        }
-    }
+        hospitalController = GetComponent<HospitalController>();
+        // Create a nurse and a doctor
+        Nurse nurse = new Nurse("Sarah");
+        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
 
     public float Cash { get; private set; }
     public float UpkeepCost { get; private set; }
@@ -94,5 +94,25 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over: " + reason);
         // Add game-over handling logic here
+    }
+
+    private void Update()
+    {
+        fGameTimer += Time.deltaTime;
+
+        if (fGameTimer > (fPatientSpawnInterval * iSpawnIntervalCounter))
+        {
+            if (iSpawnIntervalCounter == 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    hospitalController.AdmitPatient();
+                }
+            }
+            else
+            {
+                hospitalController.AdmitPatient();
+            }
+        }
     }
 }

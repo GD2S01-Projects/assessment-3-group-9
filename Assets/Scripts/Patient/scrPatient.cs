@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,7 +9,7 @@ public interface IPatient
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
 
-    // Methods to display their information
+    // Patient Methods
 
     public string DisplayInfo()
     {
@@ -100,11 +101,32 @@ public interface IPatient
 
 public class cChildPatient : MonoBehaviour, IPatient
 {
-    public string sName { get; set; }
+    private float iTimer = 0.0f;
 
+    private void Update()
+    {
+        if (bIsDead == false)
+        {
+            iTimer += Time.deltaTime;
+            if (iTimer > 1.0f)
+            {
+                iHealth -= 1;
+                iTimer = 0.0f;
+            }
+
+            if (iHealth <= 0)
+            {
+                bIsDead = true;
+            }
+        }
+    }
+
+    public string sName { get; set; }
     public string sCondition { get; set; }
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
+
+    public bool bIsDead = false;
     public string DisplayInfo()
     {
         switch (sAccidentInfo)
@@ -147,11 +169,32 @@ public class cChildPatient : MonoBehaviour, IPatient
 
 public class cAdultPatient : MonoBehaviour, IPatient
 {
-    public string sName { get; set; }
+    private float iTimer = 0.0f;
 
+    private void Update()
+    {
+        if (bIsDead == false)
+        {
+            iTimer += Time.deltaTime;
+            if (iTimer > 1.0f)
+            {
+                iHealth -= 1;
+                iTimer = 0.0f;
+            }
+
+            if (iHealth <= 0)
+            {
+                bIsDead = true;
+            }
+        }
+    }
+
+    public string sName { get; set; }
     public string sCondition { get; set; }
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
+
+    public bool bIsDead = false;
     public string DisplayInfo()
     {
         switch (sAccidentInfo)
