@@ -15,7 +15,7 @@ public class Nurse : MonoBehaviour
     public Button stethoscopeButton;  // Button for stethoscope test
     public Button confirmDiagnosisButton; // Button to confirm diagnosis
 
-    private scrPatient currentPatient;
+    private IPatient currentPatient;
     private scrDoctor specialistDoctor;
 
     // Diagnostic tools with cooldowns
@@ -46,16 +46,11 @@ public class Nurse : MonoBehaviour
     }
 
     // Call a new patient for diagnosis
-    public void CallPatient(scrPatient newPatient)
+    public void CallPatient(IPatient newPatient)
     {
         currentPatient = newPatient;
-        patientInfoText.text = "Patient: " + currentPatient.patientName + 
-            "\nHead Symptoms: " + currentPatient.DescribeSymptoms(0) +
-            "\nBody Symptoms: " + currentPatient.DescribeSymptoms(1) +
-            "\nLeft Arm Symptoms: " + currentPatient.DescribeSymptoms(2) +
-            "\nRight Arm Symptoms: " + currentPatient.DescribeSymptoms(3) +
-            "\nLeft Leg Symptoms: " + currentPatient.DescribeSymptoms(4) +
-            "\nRight Leg Symptoms: " + currentPatient.DescribeSymptoms(5);
+        patientInfoText.text = "Patient: " + currentPatient.sName +
+            "\nCurrent Symptoms: " + currentPatient.DescribeSymptoms();
     }
 
     // Test a patient with a tool
@@ -119,7 +114,7 @@ public class Nurse : MonoBehaviour
         string nurseDiagnosis = diagnosisInputField.text;
         Debug.Log("Diagnosis entered: " + nurseDiagnosis);  // Log the entered diagnosis
 
-        bool isCorrect = Diagnosis.ConfirmDiagnosis(currentPatient.patientBodyCondition, nurseDiagnosis);
+        bool isCorrect = Diagnosis.ConfirmDiagnosis(currentPatient.sCondition, nurseDiagnosis);
         if (isCorrect)
         {
             score += 10 * efficiencyLevel;
@@ -136,7 +131,7 @@ public class Nurse : MonoBehaviour
 
 
     // Refer the patient to a specialist doctor
-    public void ReferToDoctor(scrPatient patient)
+    public void ReferToDoctor(IPatient patient)
     {
         if (specialistDoctor != null)
         {

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         nurse.AssignDoctor(surgeon);
 
         // Create a patient with a condition
-        scrPatient patient1 = new scrPatient();
+        IPatient patient1 = new cAdultPatient();
 
         // Simulate calling, testing, and diagnosing the patient
         nurse.CallPatient(patient1);
