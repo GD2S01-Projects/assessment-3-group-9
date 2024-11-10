@@ -13,19 +13,19 @@ public class scrDoctor
     }
 
     // Method to receive a patient and provide feedback based on specialization
-    public void ReceivePatient(scrPatient patient)
+    public void ReceivePatient(IPatient patient)
     {
-        if (patient.patientBodyCondition == "Bleeding" && specialization == "Surgery")
+        if (patient.sCondition == "Bleeding" && specialization == "Surgery")
         {
-            Debug.Log(doctorName + " successfully treated " + patient.patientName + " for bleeding.");
+            Debug.Log(doctorName + " successfully treated " + patient.sName + " for bleeding.");
         }
-        else if (patient.patientBodyCondition == "Broken Bone" && specialization == "X-Ray")
+        else if (patient.sCondition == "Broken Bone" && specialization == "X-Ray")
         {
-            Debug.Log(doctorName + " successfully treated " + patient.patientName + " for broken bones.");
+            Debug.Log(doctorName + " successfully treated " + patient.sName + " for broken bones.");
         }
         else
         {
-            Debug.Log(doctorName + " cannot treat " + patient.patientName + " due to specialization mismatch.");
+            Debug.Log(doctorName + " cannot treat " + patient.sName + " due to specialization mismatch.");
         }
     }
 }

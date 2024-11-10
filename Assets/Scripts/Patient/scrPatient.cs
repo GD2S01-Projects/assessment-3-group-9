@@ -1,95 +1,68 @@
 using UnityEngine;
 
-public class scrPatient : MonoBehaviour
+public interface IPatient
 {
-    public string patientName { get; set; }
+    public string sName { get; set; }
+    public string sCondition { get; set; }
+    public int iHealth { get; set; }
+    public string sAccidentInfo { get; set; }
 
-    //# PartID = 0
-    public string patientHeadCondition { get; set; }
-    public float patientHeadState { get; set; }
+    // Methods to display their information
 
-    //# PartID = 1
-    public string patientBodyCondition { get; set; }
-    public float patientBodyState { get; set; }
-        
-    //# PartID = 2
-    public string patientLeftArmCondition { get; set; }
-    public float patientLeftArmState { get; set; }
-
-    //# PartID = 3
-    public string patientRightArmCondition { get; set; }
-    public float patientRightArmState { get; set; }
-
-    //# PartID = 4
-    public string patientLeftLegCondition { get; set; }
-    public float patientLeftLegState { get; set; }
-
-    //# PartID = 5
-    public string patientRightLegCondition { get; set; }
-    public float patientRightLegState { get; set; }
-
-// Method to describe symptoms
-public string DescribeSymptoms(int _PartID)
+    public string DisplayInfo()
     {
-        string condition = "";
-        int severity = 0;
-        switch (_PartID)
-        {
-            case (0): condition = patientHeadCondition; severity = ReturnSeverity(patientHeadState);  break;
-            case (1): condition = patientBodyCondition; severity = ReturnSeverity(patientBodyState); break;
-            case (2): condition = patientLeftArmCondition; severity = ReturnSeverity(patientLeftArmState); break;
-            case (3): condition = patientRightArmCondition; severity = ReturnSeverity(patientRightArmState); break;
-            case (4): condition = patientLeftLegCondition; severity = ReturnSeverity(patientLeftLegState); break;
-            case (5): condition = patientRightLegCondition; severity = ReturnSeverity(patientRightLegState); break;
-        }
+        return sAccidentInfo;
+    }
+
+    public string DescribeSymptoms()
+    {
+        string condition = sCondition;
+        int severity = ReturnSeverity(iHealth);
 
         switch (condition)
         {
             case "Healthy":
                 {
-                    switch (severity)
-                    {
-                        case 1: return "This area is looking healthy.";
-                        case 2: return "This area is looking healthy.";
-                        case 3: return "This area is looking healthy.";
-                        case 4: return "This area is looking healthy.";
-                        default: return "This area is looking healthy.";
-                    }
+                    return "This patient is looking healthy.";
                 }
             case "Bleeding":
                 switch (severity)
                 {
-                    case 1: return "This area is bleeding lightly.";
-                    case 2: return "This area is bleeding moderately.";
-                    case 3: return "This area is bleeding heavily.";
-                    case 4: return "This area is gushing blood everywhere.";
-                    default: return "This area is bleeding lightly.";
+                    case 1: return "The patient is bleeding lightly.";
+                    case 2: return "The patient is bleeding moderately.";
+                    case 3: return "The patient is bleeding heavily.";
+                    case 4: return "The patient is gushing blood everywhere.";
+                    case 5: return "The patient has died of blood loss";
+                    default: return "The patient is bleeding lightly.";
                 }
-            case "Bruised":
+            case "Sick":
                 switch (severity)
                 {
-                    case 1: return "This area is lightly bruised.";
-                    case 2: return "This area is moderately bruised.";
-                    case 3: return "This area is heavily bruises.";
-                    case 4: return "This area is agonizingly swollen with dark bruises.";
+                    case 1: return "The patient is bruised lightly.";
+                    case 2: return "The patient is bruised moderately.";
+                    case 3: return "The patient bruises are extremely painful.";
+                    case 4: return "The patient is covered in bruises";
+                    case 5: return "The patient has died of shock";
+                    default: return "The patient is bleeding lightly.";
+                }
+            case "HighBPM":
+                switch (severity)
+                {
+                    case 1: return "The patient's chest hurts.";
+                    case 2: return "The patient is feeling a lot of pressure around their chest.";
+                    case 3: return "The patient is feeling dizzy and has a burning sensation around their heart.";
+                    case 4: return "The patient is having a serious heart attack.";
+                    case 5: return "The patient has died of a heart attack.";
                     default: return "This area is lightly bruised.";
                 }
-            case "Frostbite":
+            case "BrokenBone":
                 switch (severity)
                 {
-                    case 1: return "The area is cold to the touch.";
-                    case 2: return "The area is a bright red, and is quite cold.";
-                    case 3: return "The area is pale, very cold, and has formed blisters.";
-                    case 4: return "The area is a deep black and is nearly rock solid.";
-                    default: return "This area is cold to the touch.";
-                }
-            case "Broken Bone":
-                switch (severity)
-                {
-                    case 1: return "There is a small bone fracture in this area.";
-                    case 2: return "There is a large bone fracture in this area.";
-                    case 3: return "There is a bone pushing against the area.";
-                    case 4: return "There is a bone piercing out of the skin in this area.";
+                    case 1: return "There is a small bone fracture in the patient.";
+                    case 2: return "There is a large bone fracture in the patient.";
+                    case 3: return "There is a bone pushing against the patient's skin.";
+                    case 4: return "There is a bone piercing out of the patient's body.";
+                    case 5: return "The patient has died due to internal bleeding";
                     default: return "There is a small bone fracture in this area.";
                 }
             default:
@@ -97,25 +70,124 @@ public string DescribeSymptoms(int _PartID)
         }
     }
 
-    private int ReturnSeverity(float _HealthPercentage)
+    private int ReturnSeverity(int _HealthPercentage)
     {
         int conditionSeverity = 1;
-        if (_HealthPercentage < 75f)
+        if (_HealthPercentage < 75)
         {
             conditionSeverity = 1;
         }
-        else if (_HealthPercentage > 75f && _HealthPercentage < 50f)
+        else if (_HealthPercentage > 75 && _HealthPercentage < 50)
         {
             conditionSeverity = 2;
         }
-        else if (_HealthPercentage > 50f && _HealthPercentage < 25f)
+        else if (_HealthPercentage > 50 && _HealthPercentage < 25)
         {
             conditionSeverity = 3;
         }
-        else if (_HealthPercentage > 25f && _HealthPercentage < 0f)
+        else if (_HealthPercentage > 25 && _HealthPercentage < 0)
         {
             conditionSeverity = 4;
         }
+        else if (_HealthPercentage == 0)
+        {
+            conditionSeverity = 5;
+        }
         return conditionSeverity;
     }
+}
+
+public class cChildPatient : MonoBehaviour, IPatient
+{
+    public string sName { get; set; }
+
+    public string sCondition { get; set; }
+    public int iHealth { get; set; }
+    public string sAccidentInfo { get; set; }
+    public string DisplayInfo()
+    {
+        switch (sAccidentInfo)
+        {
+            case "CarCrash":
+                {
+                    return "Mummy and Daddy crashed their car and now I feel hurt";
+                }
+            case "MountainAccident":
+                {
+                    return "Me and my parents were going for a walk and I fell down the hill for a long time";
+                }
+            case "Attacked":
+                {
+                    return "A bad man hurt me";
+                }
+            case "Fight":
+                {
+                    return "I fought back against a bad bully but they hurt me a lot";
+                }
+            case "Exposed":
+                {
+                    return "I was outside for a long time when it was cold";
+                }
+            case "FellOver":
+                {
+                    return "I fell over badly and it hurts";
+                }
+            case "WorkAccident":
+                {
+                    return "null";
+                }
+            default:
+                {
+                    return "default case";
+                }
+        }
+    }
+}
+
+public class cAdultPatient : MonoBehaviour, IPatient
+{
+    public string sName { get; set; }
+
+    public string sCondition { get; set; }
+    public int iHealth { get; set; }
+    public string sAccidentInfo { get; set; }
+    public string DisplayInfo()
+    {
+        switch (sAccidentInfo)
+        {
+            case "CarCrash":
+                {
+                    return "Some asshole came out of nowhere and crashed into my car";
+                }
+            case "MountainAccident":
+                {
+                    return "I was on a hiking trail and lost my footing, fell for quite a ways";
+                }
+            case "Attacked":
+                {
+                    return "I was assaulted and robbed while walking back home";
+                }
+            case "Fight":
+                {
+                    return "Got into a fight with some douche who couldn't keep their mouth shut";
+                }
+            case "Exposed":
+                {
+                    return "Was out in the cold for long time.";
+                }
+            case "FellOver":
+                {
+                    return "Tripped up on my shoe-laces and hit the ground pretty hard...";
+                }
+            case "WorkAccident":
+                {
+                    return "Was operating on some machinery at work and had a bit of a accident";
+                }
+            default:
+                {
+                    return "default case";
+                }
+        }
+    }
+
 }
