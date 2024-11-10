@@ -28,9 +28,8 @@ public class scrPatient : MonoBehaviour
     public string patientRightLegCondition { get; set; }
     public float patientRightLegState { get; set; }
 
-
-    // Method to describe symptoms
-    public string DescribeSymptoms(int _PartID)
+// Method to describe symptoms
+public string DescribeSymptoms(int _PartID)
     {
         string condition = "";
         int severity = 0;

@@ -8,7 +8,7 @@ public class scrPatientController : MonoBehaviour
     public float fEnterInterval;
     private float fCurrentTimer = 0.0f;
     private int iTotalCreatedToday = 0;
-
+   
     void Update()
     {
         fCurrentTimer += Time.deltaTime;
