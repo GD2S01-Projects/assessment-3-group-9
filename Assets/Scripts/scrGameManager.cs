@@ -1,29 +1,98 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    void Start()
+    private static GameManager instance;
+    public static GameManager Instance
     {
-        // Create a nurse and a doctor
-        Nurse nurse = new Nurse("Sarah");
-        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("GameManager");
+                    instance = go.AddComponent<GameManager>();
+                }
+            }
+            return instance;
+        }
+    }
 
-        // Assign doctor to nurse
-        nurse.AssignDoctor(surgeon);
+    public float Cash { get; private set; }
+    public float UpkeepCost { get; private set; }
+    public int PatientQueueCount { get; private set; } = 0;
 
-        // Create a patient with a condition
-        IPatient patient1 = new cAdultPatient();
+    private List<IObserver> observers = new List<IObserver>();
 
-        // Simulate calling, testing, and diagnosing the patient
-        nurse.CallPatient(patient1);
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-        // The nurse tests the patient with a thermometer
-        nurse.TestPatient("thermometer");
+    public void AddObserver(IObserver observer)
+    {
+        observers.Add(observer);
+    }
 
-        // The nurse tests the patient with a stethoscope
-        nurse.TestPatient("stethoscope");
+    public void RemoveObserver(IObserver observer)
+    {
+        observers.Remove(observer);
+    }
 
-        // Display nurse's score after interaction
-        nurse.DisplayScore();
+    public void NotifyObservers()
+    {
+        foreach (IObserver observer in observers)
+        {
+            observer.UpdateObserver();
+        }
+    }
+
+    public void ShiftChange()
+    {
+        NotifyObservers();
+    }
+
+    public void DeductUpkeepCost()
+    {
+        Cash -= UpkeepCost;
+        if (Cash < 0)
+        {
+            EndGame("Insufficient funds for upkeep.");
+        }
+    }
+
+    public void IncrementPatientQueue()
+    {
+        PatientQueueCount++;
+        if (PatientQueueCount > 15)
+        {
+            EndGame("Too many patients in the queue.");
+        }
+    }
+
+    public void DecrementPatientQueue()
+    {
+        if (PatientQueueCount > 0)
+        {
+            PatientQueueCount--;
+        }
+    }
+
+    public void EndGame(string reason)
+    {
+        Debug.Log("Game Over: " + reason);
+        // Add game-over handling logic here
     }
 }

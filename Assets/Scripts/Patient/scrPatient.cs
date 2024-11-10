@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public interface IPatient
 {
     public string sName { get; set; }

@@ -1,31 +1,34 @@
 using UnityEngine;
+using System.Collections;
 
-public class scrDoctor
+namespace MedicalPractitionerNamespace
 {
-    public string doctorName;
-    public string specialization;
-
-    // Constructor for the doctor
-    public scrDoctor(string name, string specialization)
+    public class Doctor : MedicalPractitioner
     {
-        this.doctorName = name;
-        this.specialization = specialization;
-    }
+        public string Specialization;
+        private bool isAvailable = true;
 
-    // Method to receive a patient and provide feedback based on specialization
-    public void ReceivePatient(IPatient patient)
-    {
-        if (patient.sCondition == "Bleeding" && specialization == "Surgery")
+        public override bool IsAvailable() => isAvailable;
+
+        public override void AssignPatient(GameObject patient)
         {
-            Debug.Log(doctorName + " successfully treated " + patient.sName + " for bleeding.");
+            if (isAvailable)
+            {
+                Debug.Log(sName + " is treating patient: " + patient.name);
+                isAvailable = false;
+                StartCoroutine(CompleteTreatment());
+            }
+            else
+            {
+                Debug.Log(sName + " is currently busy.");
+            }
         }
-        else if (patient.sCondition == "Broken Bone" && specialization == "X-Ray")
+
+        private IEnumerator CompleteTreatment()
         {
-            Debug.Log(doctorName + " successfully treated " + patient.sName + " for broken bones.");
-        }
-        else
-        {
-            Debug.Log(doctorName + " cannot treat " + patient.sName + " due to specialization mismatch.");
+            yield return new WaitForSeconds(5); // Standard treatment time
+            Debug.Log(sName + " has completed treatment for patient.");
+            isAvailable = true;
         }
     }
 }
