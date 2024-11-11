@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-public class LogEntry : MonoBehaviour
+public class scrLogEntry : MonoBehaviour
 {
     public TextMeshProUGUI timestampText;
     public TextMeshProUGUI messageText;

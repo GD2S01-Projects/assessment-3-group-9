@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class PatientIndicator : MonoBehaviour
+public class scrPatientIndicator : MonoBehaviour
 {
     private Image backgroundImage;
     private Button button;
-    private string patientId;
+    private scrPatient patient;
 
     private void Awake()
     {
@@ -15,9 +14,9 @@ public class PatientIndicator : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
-    public void Initialize(string id)
+    public void Initialize(scrPatient patient)
     {
-        patientId = id;
+        this.patient = patient;
         backgroundImage.color = Color.black;
     }
 
@@ -28,6 +27,6 @@ public class PatientIndicator : MonoBehaviour
 
     private void OnClick()
     {
-        UIManager.Instance.ShowPatientInfo(patientId);
+        scrUIManager.Instance.ShowPatientInfo(patient);
     }
 }

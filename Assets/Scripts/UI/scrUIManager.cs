@@ -2,16 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System;
 
-public class UIManager : MonoBehaviour
+public class scrUIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
+    public static scrUIManager Instance { get; private set; }
 
-    [Header("Prefabs")]
-    public GameObject patientIndicatorPrefab;
-    public GameObject roomIndicatorPrefab;
-    public GameObject logEntryPrefab;
+    [Header("Main Controllers")]
+    public HospitalController hospitalController;
 
     [Header("UI Containers")]
     public Transform patientGridContainer;
@@ -29,12 +26,21 @@ public class UIManager : MonoBehaviour
     [Header("Patient Info Panel")]
     public GameObject patientInfoPanel;
     public TextMeshProUGUI patientNameText;
-    public TextMeshProUGUI patientAgeText;
-    public TextMeshProUGUI patientConditionText;
+    public TextMeshProUGUI patientHeadConditionText;
+    public TextMeshProUGUI patientBodyConditionText;
+    public TextMeshProUGUI patientLeftArmConditionText;
+    public TextMeshProUGUI patientRightArmConditionText;
+    public TextMeshProUGUI patientLeftLegConditionText;
+    public TextMeshProUGUI patientRightLegConditionText;
 
-    private Dictionary<string, PatientIndicator> patientIndicators = new Dictionary<string, PatientIndicator>();
-    private Dictionary<string, RoomIndicator> doctorRoomIndicators = new Dictionary<string, RoomIndicator>();
-    private Dictionary<string, RoomIndicator> nurseRoomIndicators = new Dictionary<string, RoomIndicator>();
+    [Header("Prefabs")]
+    public GameObject patientIndicatorPrefab;
+    public GameObject roomIndicatorPrefab;
+    public GameObject logEntryPrefab;
+
+    private Dictionary<string, scrPatientIndicator> patientIndicators = new Dictionary<string, scrPatientIndicator>();
+    private Dictionary<string, scrRoomIndicator> doctorRoomIndicators = new Dictionary<string, scrRoomIndicator>();
+    private Dictionary<string, scrRoomIndicator> nurseRoomIndicators = new Dictionary<string, scrRoomIndicator>();
 
     private void Awake()
     {
@@ -44,116 +50,82 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         InitializeUI();
-        // Subscribe to GameManager events
-        scrGameManager.Instance.OnCashChanged += UpdateCashDisplay;
-        scrGameManager.Instance.OnTimeChanged += UpdateTimeDisplay;
-        scrGameManager.Instance.OnUpkeepChanged += UpdateUpkeepDisplay;
     }
 
     private void InitializeUI()
     {
-        // Clear any existing indicators
         ClearAllContainers();
-
-        // Initialize with doctors from factory
-        foreach (var doctor in DoctorFactory.Instance.GetAllDoctors())
-        {
-            CreateDoctorRoomIndicator(doctor.id);
-        }
-
-        // Initialize with nurses from factory
-        foreach (var nurse in NurseFactory.Instance.GetAllNurses())
-        {
-            CreateNurseRoomIndicator(nurse.id);
-        }
-
+        CreateDoctorRooms();
+        CreateNurseRooms();
         patientInfoPanel.SetActive(false);
     }
 
-    public void OnNewPatient(string patientId, string patientName)
+    public void OnNewPatient(scrPatient patient)
     {
-        CreatePatientIndicator(patientId);
+        GameObject indicator = Instantiate(patientIndicatorPrefab, patientGridContainer);
+        scrPatientIndicator patientIndicator = indicator.GetComponent<scrPatientIndicator>();
+        patientIndicator.Initialize(patient);
+        patientIndicators[patient.GetInstanceID().ToString()] = patientIndicator;
         UpdatePatientCounter();
-        AddLogEntry($"New patient arrived: {patientName}");
+        AddLogEntry($"New patient has arrived at the hospital");
     }
 
-    public void OnPatientAssignedToDoctor(string patientId, string doctorId, string patientName, string doctorName)
+    public void ShowPatientInfo(scrPatient patient)
     {
-        if (doctorRoomIndicators.TryGetValue(doctorId, out RoomIndicator room))
+        patientHeadConditionText.text = $"Head: {patient.DescribeSymptoms(0)}";
+        patientBodyConditionText.text = $"Body: {patient.DescribeSymptoms(1)}";
+        patientLeftArmConditionText.text = $"Left Arm: {patient.DescribeSymptoms(2)}";
+        patientRightArmConditionText.text = $"Right Arm: {patient.DescribeSymptoms(3)}";
+        patientLeftLegConditionText.text = $"Left Leg: {patient.DescribeSymptoms(4)}";
+        patientRightLegConditionText.text = $"Right Leg: {patient.DescribeSymptoms(5)}";
+        patientInfoPanel.SetActive(true);
+        AddLogEntry($"Examining patient");
+    }
+
+    private void CreateDoctorRooms()
+    {
+        for (int i = 0; i < 6; i++)
         {
-            room.SetOccupied(true);
-        }
-        AddLogEntry($"Patient {patientName} is seeing Dr. {doctorName}");
-    }
-
-    public void OnPatientAssignedToNurse(string patientId, string nurseId, string patientName, string nurseName)
-    {
-        if (nurseRoomIndicators.TryGetValue(nurseId, out RoomIndicator room))
-        {
-            room.SetOccupied(true);
-        }
-        AddLogEntry($"Patient {patientName} is seeing Nurse {nurseName}");
-    }
-
-    public void OnPatientDismissed(string patientId, string patientName, string reason)
-    {
-        if (patientIndicators.TryGetValue(patientId, out PatientIndicator indicator))
-        {
-            Destroy(indicator.gameObject);
-            patientIndicators.Remove(patientId);
-        }
-        UpdatePatientCounter();
-        AddLogEntry($"Patient {patientName} has left: {reason}");
-    }
-
-    public void OnCashTransaction(float amount, string reason)
-    {
-        string prefix = amount >= 0 ? "+" : "-";
-        AddLogEntry($"{prefix}${Mathf.Abs(amount):F2} - {reason}");
-    }
-
-    public void ShowPatientInfo(string patientId)
-    {
-        // Pull patient data from your patient management system
-        var patient = PatientFactory.Instance.GetPatient(patientId);
-        if (patient != null)
-        {
-            patientNameText.text = patient.name;
-            patientAgeText.text = patient.age.ToString();
-            patientConditionText.text = patient.condition;
-            patientInfoPanel.SetActive(true);
-            AddLogEntry($"Viewing patient info: {patient.name}");
+            GameObject roomObj = Instantiate(roomIndicatorPrefab, doctorRoomsContainer);
+            scrRoomIndicator room = roomObj.GetComponent<scrRoomIndicator>();
+            room.Initialize($"Doctor_{i}");
+            doctorRoomIndicators[room.GetRoomId()] = room;
         }
     }
 
-    private void UpdateCashDisplay(float newAmount)
+    private void CreateNurseRooms()
     {
-        cashText.text = $"${newAmount:F2}";
+        for (int i = 0; i < 6; i++)
+        {
+            GameObject roomObj = Instantiate(roomIndicatorPrefab, nurseRoomContainer);
+            scrRoomIndicator room = roomObj.GetComponent<scrRoomIndicator>();
+            room.Initialize($"Nurse_{i}");
+            nurseRoomIndicators[room.GetRoomId()] = room;
+        }
     }
 
-    private void UpdateTimeDisplay(string timeString)
+    public void UpdateRoomStatus(string roomId, bool isOccupied)
     {
-        timerText.text = timeString;
-    }
-
-    private void UpdateUpkeepDisplay(float upkeepAmount)
-    {
-        upkeepText.text = $"Upkeep: ${upkeepAmount}/hr";
+        if (doctorRoomIndicators.TryGetValue(roomId, out scrRoomIndicator doctorRoom))
+        {
+            doctorRoom.SetOccupied(isOccupied);
+        }
+        else if (nurseRoomIndicators.TryGetValue(roomId, out scrRoomIndicator nurseRoom))
+        {
+            nurseRoom.SetOccupied(isOccupied);
+        }
     }
 
     private void UpdatePatientCounter()
     {
-        int count = patientIndicators.Count;
-        patientCounterText.text = $"Patients: {count}";
+        patientCounterText.text = $"Patients: {patientIndicators.Count}";
     }
 
-    private void AddLogEntry(string message)
+    public void AddLogEntry(string message)
     {
-        GameObject entryObject = Instantiate(logEntryPrefab, logContainer);
-        LogEntry entry = entryObject.GetComponent<LogEntry>();
-        entry.Initialize(System.DateTime.Now.ToString("HH:mm:ss"), message);
-
-        // Auto scroll to bottom
+        GameObject entryObj = Instantiate(logEntryPrefab, logContainer);
+        scrLogEntry logEntry = entryObj.GetComponent<scrLogEntry>();
+        logEntry.Initialize(System.DateTime.Now.ToString("HH:mm:ss"), message);
         Canvas.ForceUpdateCanvases();
         logScrollRect.normalizedPosition = new Vector2(0, 0);
     }
