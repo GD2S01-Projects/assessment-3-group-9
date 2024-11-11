@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public HospitalController hospitalController;
     float fGameTimer = 0.0f;
-    float fPatientSpawnInterval = 10.0f;
-    int iSpawnIntervalCounter = 0;
+    float fUpkeepTimeInterval = 180.0f;
 
     int iMoney = 0;
     int iUpkeep = 500;
-    int iUpkeepInterval = 250;
-    int iCuredPatientReward = 100; 
+    int iUpkeepInterval = 50;
 
     
     void Start()
     {
-        hospitalController = GetComponent<HospitalController>();
         // Create a nurse and a doctor
         Nurse nurse = new Nurse("Sarah");
         scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
@@ -43,18 +39,19 @@ public class GameManager : MonoBehaviour
     {
         fGameTimer += Time.deltaTime;
 
-        if (fGameTimer > (fPatientSpawnInterval * iSpawnIntervalCounter))
+        if (fGameTimer > fUpkeepTimeInterval)
         {
-            if (iSpawnIntervalCounter == 0)
+            fGameTimer = 0.0f;
+            iMoney -= iUpkeep;
+
+            if (iMoney < 0)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    hospitalController.AdmitPatient();
-                }
+                Debug.Log("You couldn't pay your staff and the hospital grinds to a stop. You lose!");
+                Application.Quit();
             }
             else
             {
-                hospitalController.AdmitPatient();
+                iUpkeep += iUpkeepInterval;
             }
         }
     }
