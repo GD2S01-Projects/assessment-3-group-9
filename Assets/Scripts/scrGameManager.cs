@@ -1,26 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MedicalPractitionerNamespace;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance; 
+
     public HospitalController hospitalController;
-    float fGameTimer = 0.0f;
-    float fPatientSpawnInterval = 10.0f;
-    int iSpawnIntervalCounter = 0;
+    private float fGameTimer = 0.0f;
+    private float fPatientSpawnInterval = 10.0f;
+    private int iSpawnIntervalCounter = 0;
 
-    int iMoney = 0;
-    int iUpkeep = 500;
-    int iUpkeepInterval = 250;
-    int iCuredPatientReward = 100; 
-
-    
-    void Start()
-    {
-        hospitalController = GetComponent<HospitalController>();
-        // Create a nurse and a doctor
-        Nurse nurse = new Nurse("Sarah");
-        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
+    private int iMoney = 0;
+    private int iUpkeep = 500;
+    private int iUpkeepInterval = 250;
+    private int iCuredPatientReward = 100;
 
     public float Cash { get; private set; }
     public float UpkeepCost { get; private set; }
@@ -30,15 +25,28 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        hospitalController = GetComponent<HospitalController>();
+
+        // Creates a nurse and a doctor using AddComponent
+        Nurse nurse = gameObject.AddComponent<Nurse>();
+        nurse.sName = "Sarah";
+
+        Doctor surgeon = gameObject.AddComponent<Doctor>();
+        surgeon.sName = "Dr. Smith";
+        surgeon.Specialization = "Surgery";
     }
 
     public void AddObserver(IObserver observer)

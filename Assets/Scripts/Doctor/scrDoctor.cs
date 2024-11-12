@@ -6,7 +6,7 @@ namespace MedicalPractitionerNamespace
     public class Doctor : MedicalPractitioner
     {
         public string Specialization;
-        private bool isAvailable = true;
+        public bool isAvailable = true;
 
         public override bool IsAvailable() => isAvailable;
 
