@@ -1,18 +1,29 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MedicalPractitionerNamespace
 {
-    public class NurseFactory
+    public class NurseFactory : MedicalPractitionerFactory
     {
-        public Nurse CreateNurse(string name)
+        public Nurse CreateNurse(string name, int efficiencyLevel)
         {
-            Nurse newNurse = new GameObject(name).AddComponent<Nurse>();
-            newNurse.sName = name;
+            // Creates a new GameObject for the Nurse
+            GameObject nurseObject = new GameObject(name);
 
-            // You can set additional properties or initialize as needed
-            return newNurse;
+            // Adds the Nurse component to the GameObject
+            Nurse nurse = nurseObject.AddComponent<Nurse>();
+            nurse.sName = name;
+            nurse.EfficiencyLevel = efficiencyLevel;
+            nurse.isAvailable = true;
+
+            Debug.Log("Created Nurse: " + name + " with efficiency level " + efficiencyLevel);
+
+            return nurse;
+        }
+
+        public override MedicalPractitioner CreateMedicalPractitioner()
+        {
+            // Default nurse creation with placeholder values
+            return CreateNurse("Default Nurse", 1);
         }
     }
 }
