@@ -1,29 +1,43 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace MedicalPractitionerNamespace
 {
     public class DoctorFactory : MedicalPractitionerFactory
     {
-        public Doctor CreateDoctor(string name, string specialization)
+        private static readonly List<string> doctorNames = new List<string>
         {
-            // Creates a new GameObject for the Doctor
-            GameObject doctorObject = new GameObject(name);
+            "Dr. Smith", "Dr. Johnson", "Dr. Brown", "Dr. Taylor", "Dr. Anderson",
+            "Dr. Martinez", "Dr. Hernandez", "Dr. Lee", "Dr. Wilson", "Dr. Clark"
+        };
 
-            // Adds the Doctor component to the GameObject
+        private static readonly List<string> specializations = new List<string>
+        {
+            "General Practitioner", "Emergency Physician", "Cardiologist ", "Orthopedic Surgeon",
+            "Dermatology"
+        };
+
+        public Doctor CreateRandomDoctor()
+        {
+            // Randomly select a name and specialization for the doctor
+            string name = doctorNames[Random.Range(0, doctorNames.Count)];
+            string specialization = specializations[Random.Range(0, specializations.Count)];
+
+            // Create the doctor GameObject and component
+            GameObject doctorObject = new GameObject(name);
             Doctor doctor = doctorObject.AddComponent<Doctor>();
             doctor.sName = name;
             doctor.Specialization = specialization;
             doctor.isAvailable = true;
 
-            Debug.Log("Created Doctor: " + name + " specialized in " + specialization);
+            Debug.Log($"Created Doctor: {name} with specialization in {specialization}");
 
             return doctor;
         }
 
         public override MedicalPractitioner CreateMedicalPractitioner()
         {
-            // Default doctor creation with placeholder values
-            return CreateDoctor("Default Doctor", "General");
+            return CreateRandomDoctor();
         }
     }
 }
