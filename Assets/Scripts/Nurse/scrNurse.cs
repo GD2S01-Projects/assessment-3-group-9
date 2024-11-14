@@ -6,7 +6,7 @@ namespace MedicalPractitionerNamespace
     public class Nurse : MedicalPractitioner
     {
         public int EfficiencyLevel = 1;
-        private bool isAvailable = true;
+        public bool isAvailable = true;
 
         public override bool IsAvailable() => isAvailable;
 

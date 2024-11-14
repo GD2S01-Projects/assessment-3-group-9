@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5859719134653632690
+--- !u!1 &8811061347489392684
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4413447408871622095}
-  - component: {fileID: 5807623488328190556}
+  - component: {fileID: 8904581405279431217}
+  - component: {fileID: -4617216469985205428}
   m_Layer: 0
-  m_Name: PatientFactory
+  m_Name: DoctorFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4413447408871622095
+--- !u!4 &8904581405279431217
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5859719134653632690}
+  m_GameObject: {fileID: 8811061347489392684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,16 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5807623488328190556
+--- !u!114 &-4617216469985205428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5859719134653632690}
+  m_GameObject: {fileID: 8811061347489392684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e65ce9f641044499fa916e9b8e1f51, type: 3}
+  m_Script: {fileID: 11500000, guid: b1964eb484afcd947a2dcd1c024f1b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patientPrefab: {fileID: 3078093037828662688, guid: 196e422ad94013b4ca0ba37cd61257cc, type: 3}
