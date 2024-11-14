@@ -26,12 +26,7 @@ public class scrUIManager : MonoBehaviour
     [Header("Patient Info Panel")]
     public GameObject patientInfoPanel;
     public TextMeshProUGUI patientNameText;
-    public TextMeshProUGUI patientHeadConditionText;
-    public TextMeshProUGUI patientBodyConditionText;
-    public TextMeshProUGUI patientLeftArmConditionText;
-    public TextMeshProUGUI patientRightArmConditionText;
-    public TextMeshProUGUI patientLeftLegConditionText;
-    public TextMeshProUGUI patientRightLegConditionText;
+    public TextMeshProUGUI patientConditionText;
 
     [Header("Prefabs")]
     public GameObject patientIndicatorPrefab;
@@ -66,6 +61,7 @@ public class scrUIManager : MonoBehaviour
         scrPatientIndicator patientIndicator = indicator.GetComponent<scrPatientIndicator>();
         patientIndicator.Initialize(patient);
         // patientIndicators[patient.GetInstanceID().ToString()] = patientIndicator;
+        patientIndicators[patient.ToString()] = patientIndicator;
         UpdatePatientCounter();
         AddLogEntry($"New patient has arrived at the hospital");
     }
@@ -78,6 +74,7 @@ public class scrUIManager : MonoBehaviour
         patientRightArmConditionText.text = $"Right Arm: {patient.DescribeSymptoms()}";
         patientLeftLegConditionText.text = $"Left Leg: {patient.DescribeSymptoms()}";
         patientRightLegConditionText.text = $"Right Leg: {patient.DescribeSymptoms()}";
+        patientConditionText.text = $"Symptoms: {patient.DescribeSymptoms()}";
         patientInfoPanel.SetActive(true);
         AddLogEntry($"Examining patient");
     }

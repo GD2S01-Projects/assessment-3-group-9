@@ -11,28 +11,7 @@ public class HospitalController : MonoBehaviour
     public RoomController Room4;
     public RoomController Room5;
 
-    public static int iPatientMaxCapacity = 13;
-    public int iPatientArraySize = 0;
-    public IPatient[] PatientArray = new IPatient[iPatientMaxCapacity];
-
-    //prviate Patient
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        iPatientArraySize = 0;
-        for (int i = 0; i < iPatientMaxCapacity; i++)
-        {
-            if (PatientArray[i] != null) 
-            {
-                iPatientArraySize++;
-            }
-        }
-    }
+   
 
     public void AdmitPatient()
     {

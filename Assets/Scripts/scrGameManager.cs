@@ -5,12 +5,6 @@ using MedicalPractitionerNamespace;
 
 public class GameManager : MonoBehaviour
 {
-    float fGameTimer = 0.0f;
-    float fUpkeepTimeInterval = 180.0f;
-
-    int iMoney = 0;
-    int iUpkeep = 500;
-    int iUpkeepInterval = 50;
     public static GameManager Instance; 
 
     public HospitalController hospitalController;
@@ -18,9 +12,13 @@ public class GameManager : MonoBehaviour
     private int iSpawnIntervalCounter = 0;
 
     private int iCuredPatientReward = 100;
+    private float fGameTimer = 0.0f;
+    private float fUpkeepTimeInterval = 180.0f;
 
-    public float Cash { get; private set; }
-    public float UpkeepCost { get; private set; }
+    private int iMoney = 0;
+    private int iUpkeep = 500;
+    private int iUpkeepInterval = 50;
+
     public int PatientQueueCount { get; private set; } = 0;
 
     private List<IObserver> observers = new List<IObserver>();
@@ -47,9 +45,15 @@ public class GameManager : MonoBehaviour
 
         // Creates a nurse and a doctor using AddComponent
         nurse = gameObject.AddComponent<Nurse>();
+        hospitalController = GetComponent<HospitalController>();
+
+        // Creates a nurse and a doctor using AddComponent
+        Nurse nurse = new Nurse();
         nurse.sName = "Sarah";
+        nurse.EfficiencyLevel = 1;
 
         surgeon = gameObject.AddComponent<Doctor>();
+        Doctor surgeon = new Doctor();
         surgeon.sName = "Dr. Smith";
         surgeon.Specialization = "Surgery";
     }
@@ -79,12 +83,18 @@ public class GameManager : MonoBehaviour
 
     public void DeductUpkeepCost()
     {
-        Cash -= UpkeepCost;
-        if (Cash < 0)
+        iMoney -= iUpkeep;
+        if (iMoney < 0)
         {
             EndGame("Insufficient funds for upkeep.");
         }
+        else
+        {
+            ShiftChange();
+            iUpkeep += iUpkeepInterval;
+        }
     }
+
 
     public void IncrementPatientQueue()
     {
@@ -115,18 +125,7 @@ public class GameManager : MonoBehaviour
 
         if (fGameTimer > fUpkeepTimeInterval)
         {
-            fGameTimer = 0.0f;
-            iMoney -= iUpkeep;
-
-            if (iMoney < 0)
-            {
-                Debug.Log("You couldn't pay your staff and the hospital grinds to a stop. You lose!");
-                Application.Quit();
-            }
-            else
-            {
-                iUpkeep += iUpkeepInterval;
-            }
+            DeductUpkeepCost();            
         }
     }
 }
