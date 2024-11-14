@@ -42,14 +42,14 @@ public class GameManager : MonoBehaviour
     {
         // Create a nurse and a doctor
         Nurse nurse = new Nurse("Sarah");
-        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
+        Doctor surgeon = new Doctor("Dr. Smith", "Surgery");
         hospitalController = GetComponent<HospitalController>();
 
         // Creates a nurse and a doctor using AddComponent
-        Nurse nurse = gameObject.AddComponent<Nurse>();
+        nurse = gameObject.AddComponent<Nurse>();
         nurse.sName = "Sarah";
 
-        Doctor surgeon = gameObject.AddComponent<Doctor>();
+        surgeon = gameObject.AddComponent<Doctor>();
         surgeon.sName = "Dr. Smith";
         surgeon.Specialization = "Surgery";
     }

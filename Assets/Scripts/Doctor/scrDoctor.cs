@@ -8,6 +8,10 @@ namespace MedicalPractitionerNamespace
         public string Specialization;
         public bool isAvailable = true;
 
+        public Doctor(string v1, string v2)
+        {
+        }
+
         public override bool IsAvailable() => isAvailable;
 
         public override void AssignPatient(GameObject patient)

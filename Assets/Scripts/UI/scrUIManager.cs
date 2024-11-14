@@ -65,7 +65,7 @@ public class scrUIManager : MonoBehaviour
         GameObject indicator = Instantiate(patientIndicatorPrefab, patientGridContainer);
         scrPatientIndicator patientIndicator = indicator.GetComponent<scrPatientIndicator>();
         patientIndicator.Initialize(patient);
-        patientIndicators[patient.GetInstanceID().ToString()] = patientIndicator;
+        // patientIndicators[patient.GetInstanceID().ToString()] = patientIndicator;
         UpdatePatientCounter();
         AddLogEntry($"New patient has arrived at the hospital");
     }

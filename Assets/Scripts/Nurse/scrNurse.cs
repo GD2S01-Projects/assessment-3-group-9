@@ -8,6 +8,10 @@ namespace MedicalPractitionerNamespace
         public int EfficiencyLevel = 1;
         public bool isAvailable = true;
 
+        public Nurse(string v)
+        {
+        }
+
         public override bool IsAvailable() => isAvailable;
 
         public override void AssignPatient(GameObject patient)
