@@ -6,5 +6,5 @@ public abstract class MedicalPractitioner : MonoBehaviour
     public string sOccupation { get; set; }
 
     public abstract bool IsAvailable();
-    public abstract void AssignPatient(GameObject patient);
+    public abstract void AssignPatient(IPatient patient);
 }

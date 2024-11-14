@@ -10,11 +10,11 @@ namespace MedicalPractitionerNamespace
 
         public override bool IsAvailable() => isAvailable;
 
-        public override void AssignPatient(GameObject patient)
+        public override void AssignPatient(IPatient patient)
         {
             if (isAvailable)
             {
-                Debug.Log(sName + " is treating patient: " + patient.name);
+                Debug.Log(sName + " is treating patient: " + patient.sName);
                 isAvailable = false;
                 StartCoroutine(CompleteTreatment());
             }

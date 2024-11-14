@@ -9,6 +9,7 @@ public interface IPatient
     public string sCondition { get; set; }
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
+    public bool bHasBeenDiagnosed { get; set; }
 
     // Patient Methods
 
@@ -19,6 +20,11 @@ public interface IPatient
 
     public string DescribeSymptoms()
     {
+        if (bHasBeenDiagnosed == false)
+        {
+            return "???";
+        }
+
         string condition = sCondition;
         int severity = ReturnSeverity(iHealth);
 
@@ -128,6 +134,8 @@ public class cChildPatient : MonoBehaviour, IPatient
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
 
+    public bool bHasBeenDiagnosed { get; set; }
+
     public bool bIsDead = false;
 
     public int iMoneyRewarded = 75;
@@ -212,6 +220,7 @@ public class cAdultPatient : MonoBehaviour, IPatient
     public string sCondition { get; set; }
     public int iHealth { get; set; }
     public string sAccidentInfo { get; set; }
+    public bool bHasBeenDiagnosed { get; set; }
 
     public bool bIsDead = false;
 

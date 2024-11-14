@@ -3,28 +3,56 @@ using UnityEngine;
 
 public class WaitingRoom : MonoBehaviour, IObserver
 {
-    private List<GameObject> patients = new List<GameObject>();
+    private List<IPatient> PatientsList = new List<IPatient>();
 
-    public void AddPatientToRoom(GameObject patient)
+    private float fWaitingRoomTimer = 0.0f;
+    private float fPatientAdmitInterval = 10.0f;
+
+    private void Update()
     {
-        if (patients.Count < 15)
+        fWaitingRoomTimer += Time.deltaTime;
+        if (fWaitingRoomTimer > fPatientAdmitInterval)
         {
-            patients.Add(patient);
-            Debug.Log("Patient added to the waiting room.");
+            AdmitPatient();
+            fWaitingRoomTimer= 0.0f;
         }
-        else
+    }
+
+    public void AdmitPatient()
+    {
+        cAdultPatientFactory adultPatientFactory = new cAdultPatientFactory();
+        cChildPatientFactory childPatientFactory = new cChildPatientFactory();
+
+        int iCoinFlip = Random.Range(0, 2);
+
+        // Create Child Patient
+        if (iCoinFlip == 0)
         {
-            GameManager.Instance.IncrementPatientQueue();
-            Debug.Log("Waiting room full, patient added to queue.");
+            IPatient newChildPatient = childPatientFactory.CreatePatient();
+            AddPatientToRoom(newChildPatient);
         }
+        // Create Adult Patient
+        else if (iCoinFlip == 1)
+        {
+            IPatient newAdultPatient = adultPatientFactory.CreatePatient();
+            AddPatientToRoom(newAdultPatient);
+        }
+    }
+
+    public void AddPatientToRoom(IPatient patient)
+    {
+        GameManager.Instance.IncrementPatientQueue();
+        scrUIManager.Instance.OnNewPatient(patient);
+        PatientsList.Add(patient);
+        Debug.Log("Patient added to the waiting room.");
         GameManager.Instance.NotifyObservers();
     }
 
-    public void RemovePatientFromRoom(GameObject patient)
+    public void RemovePatientFromRoom(IPatient patient)
     {
-        if (patients.Contains(patient))
+        if (PatientsList.Contains(patient))
         {
-            patients.Remove(patient);
+            PatientsList.Remove(patient);
             Debug.Log("Patient removed from the waiting room.");
             GameManager.Instance.DecrementPatientQueue();
             GameManager.Instance.NotifyObservers();
@@ -33,7 +61,7 @@ public class WaitingRoom : MonoBehaviour, IObserver
 
     public bool HasPatient()
     {
-        return patients.Count > 0;
+        return PatientsList.Count > 0;
     }
 
     public void UpdateObserver()

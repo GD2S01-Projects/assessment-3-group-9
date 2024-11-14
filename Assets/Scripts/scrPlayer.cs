@@ -30,9 +30,9 @@ public class scrPlayer : MonoBehaviour
 
     public void SendPatientToPractitioner(MedicalPractitioner practitioner)
     {
-        if (selectedPatient is MonoBehaviour patientMonoBehaviour && practitioner.IsAvailable())
+        if (practitioner.IsAvailable())
         {
-            practitioner.AssignPatient(patientMonoBehaviour.gameObject);
+            practitioner.AssignPatient(selectedPatient);
             logText.text = "Patient " + selectedPatient.sName + " sent to " + practitioner.sName;
             Debug.Log("Patient " + selectedPatient.sName + " sent to " + practitioner.sName);
             selectedPatient = null;

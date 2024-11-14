@@ -26,12 +26,7 @@ public class scrUIManager : MonoBehaviour
     [Header("Patient Info Panel")]
     public GameObject patientInfoPanel;
     public TextMeshProUGUI patientNameText;
-    public TextMeshProUGUI patientHeadConditionText;
-    public TextMeshProUGUI patientBodyConditionText;
-    public TextMeshProUGUI patientLeftArmConditionText;
-    public TextMeshProUGUI patientRightArmConditionText;
-    public TextMeshProUGUI patientLeftLegConditionText;
-    public TextMeshProUGUI patientRightLegConditionText;
+    public TextMeshProUGUI patientConditionText;
 
     [Header("Prefabs")]
     public GameObject patientIndicatorPrefab;
@@ -60,24 +55,19 @@ public class scrUIManager : MonoBehaviour
         patientInfoPanel.SetActive(false);
     }
 
-    public void OnNewPatient(scrPatient patient)
+    public void OnNewPatient(IPatient patient)
     {
         GameObject indicator = Instantiate(patientIndicatorPrefab, patientGridContainer);
         scrPatientIndicator patientIndicator = indicator.GetComponent<scrPatientIndicator>();
         patientIndicator.Initialize(patient);
-        patientIndicators[patient.GetInstanceID().ToString()] = patientIndicator;
+        patientIndicators[patient.ToString()] = patientIndicator;
         UpdatePatientCounter();
         AddLogEntry($"New patient has arrived at the hospital");
     }
 
-    public void ShowPatientInfo(scrPatient patient)
+    public void ShowPatientInfo(IPatient patient)
     {
-        patientHeadConditionText.text = $"Head: {patient.DescribeSymptoms(0)}";
-        patientBodyConditionText.text = $"Body: {patient.DescribeSymptoms(1)}";
-        patientLeftArmConditionText.text = $"Left Arm: {patient.DescribeSymptoms(2)}";
-        patientRightArmConditionText.text = $"Right Arm: {patient.DescribeSymptoms(3)}";
-        patientLeftLegConditionText.text = $"Left Leg: {patient.DescribeSymptoms(4)}";
-        patientRightLegConditionText.text = $"Right Leg: {patient.DescribeSymptoms(5)}";
+        patientConditionText.text = $"Symptoms: {patient.DescribeSymptoms()}";
         patientInfoPanel.SetActive(true);
         AddLogEntry($"Examining patient");
     }
