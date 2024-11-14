@@ -14,13 +14,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance; 
 
     public HospitalController hospitalController;
-    private float fGameTimer = 0.0f;
     private float fPatientSpawnInterval = 10.0f;
     private int iSpawnIntervalCounter = 0;
 
-    private int iMoney = 0;
-    private int iUpkeep = 500;
-    private int iUpkeepInterval = 250;
     private int iCuredPatientReward = 100;
 
     public float Cash { get; private set; }

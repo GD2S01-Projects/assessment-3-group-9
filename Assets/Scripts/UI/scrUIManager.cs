@@ -60,7 +60,7 @@ public class scrUIManager : MonoBehaviour
         patientInfoPanel.SetActive(false);
     }
 
-    public void OnNewPatient(scrPatient patient)
+    public void OnNewPatient(IPatient patient)
     {
         GameObject indicator = Instantiate(patientIndicatorPrefab, patientGridContainer);
         scrPatientIndicator patientIndicator = indicator.GetComponent<scrPatientIndicator>();
@@ -70,14 +70,14 @@ public class scrUIManager : MonoBehaviour
         AddLogEntry($"New patient has arrived at the hospital");
     }
 
-    public void ShowPatientInfo(scrPatient patient)
+    public void ShowPatientInfo(IPatient patient)
     {
-        patientHeadConditionText.text = $"Head: {patient.DescribeSymptoms(0)}";
-        patientBodyConditionText.text = $"Body: {patient.DescribeSymptoms(1)}";
-        patientLeftArmConditionText.text = $"Left Arm: {patient.DescribeSymptoms(2)}";
-        patientRightArmConditionText.text = $"Right Arm: {patient.DescribeSymptoms(3)}";
-        patientLeftLegConditionText.text = $"Left Leg: {patient.DescribeSymptoms(4)}";
-        patientRightLegConditionText.text = $"Right Leg: {patient.DescribeSymptoms(5)}";
+        patientHeadConditionText.text = $"Head: {patient.DescribeSymptoms()}";
+        patientBodyConditionText.text = $"Body: {patient.DescribeSymptoms()}";
+        patientLeftArmConditionText.text = $"Left Arm: {patient.DescribeSymptoms()}";
+        patientRightArmConditionText.text = $"Right Arm: {patient.DescribeSymptoms()}";
+        patientLeftLegConditionText.text = $"Left Leg: {patient.DescribeSymptoms()}";
+        patientRightLegConditionText.text = $"Right Leg: {patient.DescribeSymptoms()}";
         patientInfoPanel.SetActive(true);
         AddLogEntry($"Examining patient");
     }

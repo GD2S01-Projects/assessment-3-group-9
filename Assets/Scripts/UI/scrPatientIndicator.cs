@@ -5,7 +5,7 @@ public class scrPatientIndicator : MonoBehaviour
 {
     private Image backgroundImage;
     private Button button;
-    private scrPatient patient;
+    private IPatient patient;
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class scrPatientIndicator : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
-    public void Initialize(scrPatient patient)
+    public void Initialize(IPatient patient)
     {
         this.patient = patient;
         backgroundImage.color = Color.black;
