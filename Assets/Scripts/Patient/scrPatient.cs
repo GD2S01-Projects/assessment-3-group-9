@@ -1,3 +1,4 @@
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -117,6 +118,7 @@ public class cChildPatient : MonoBehaviour, IPatient
             if (iHealth <= 0)
             {
                 bIsDead = true;
+                Die();
             }
         }
     }
@@ -127,6 +129,9 @@ public class cChildPatient : MonoBehaviour, IPatient
     public string sAccidentInfo { get; set; }
 
     public bool bIsDead = false;
+
+    public int iMoneyRewarded = 75;
+
     public string DisplayInfo()
     {
         switch (sAccidentInfo)
@@ -165,6 +170,19 @@ public class cChildPatient : MonoBehaviour, IPatient
                 }
         }
     }
+
+    public void GetTreatment()
+    {
+        Debug.Log("Thanks Doc! Here is " + iMoneyRewarded);
+
+        Destroy(this);
+    }
+
+    public void Die()
+    {
+        Debug.Log(sName + " has died of their condition");
+        Destroy(this);
+    }
 }
 
 public class cAdultPatient : MonoBehaviour, IPatient
@@ -185,6 +203,7 @@ public class cAdultPatient : MonoBehaviour, IPatient
             if (iHealth <= 0)
             {
                 bIsDead = true;
+                Die();
             }
         }
     }
@@ -195,6 +214,9 @@ public class cAdultPatient : MonoBehaviour, IPatient
     public string sAccidentInfo { get; set; }
 
     public bool bIsDead = false;
+
+    public int iMoneyRewarded = 75;
+
     public string DisplayInfo()
     {
         switch (sAccidentInfo)
@@ -234,4 +256,16 @@ public class cAdultPatient : MonoBehaviour, IPatient
         }
     }
 
+    public void GetTreatment()
+    {
+        Debug.Log("Thanks Doc! Here is " + iMoneyRewarded);
+        
+        Destroy(this);
+    }
+
+    public void Die()
+    {
+        Debug.Log(sName + " has died of their condition");
+        Destroy(this);
+    }
 }

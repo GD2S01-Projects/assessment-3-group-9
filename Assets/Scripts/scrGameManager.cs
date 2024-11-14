@@ -5,6 +5,12 @@ using MedicalPractitionerNamespace;
 
 public class GameManager : MonoBehaviour
 {
+    float fGameTimer = 0.0f;
+    float fUpkeepTimeInterval = 180.0f;
+
+    int iMoney = 0;
+    int iUpkeep = 500;
+    int iUpkeepInterval = 50;
     public static GameManager Instance; 
 
     public HospitalController hospitalController;
@@ -38,6 +44,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // Create a nurse and a doctor
+        Nurse nurse = new Nurse("Sarah");
+        scrDoctor surgeon = new scrDoctor("Dr. Smith", "Surgery");
         hospitalController = GetComponent<HospitalController>();
 
         // Creates a nurse and a doctor using AddComponent
@@ -108,18 +117,19 @@ public class GameManager : MonoBehaviour
     {
         fGameTimer += Time.deltaTime;
 
-        if (fGameTimer > (fPatientSpawnInterval * iSpawnIntervalCounter))
+        if (fGameTimer > fUpkeepTimeInterval)
         {
-            if (iSpawnIntervalCounter == 0)
+            fGameTimer = 0.0f;
+            iMoney -= iUpkeep;
+
+            if (iMoney < 0)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    hospitalController.AdmitPatient();
-                }
+                Debug.Log("You couldn't pay your staff and the hospital grinds to a stop. You lose!");
+                Application.Quit();
             }
             else
             {
-                hospitalController.AdmitPatient();
+                iUpkeep += iUpkeepInterval;
             }
         }
     }
